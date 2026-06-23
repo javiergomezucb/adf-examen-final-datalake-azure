@@ -1,0 +1,17 @@
+{
+	"name": "db_subsidio",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "srv-ministerio.database.windows.net",
+			"database": "db-ministerio-dw",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "adminDW",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDBEM0UxMTYzLTA5NDYtNDE5Qi1BNjM5LTU1NTkxOURGRUUyNV8xNGEyNzFmMS0yMzg0LTQ2NDUtODJlNi1jZDYzNThiMGQ0YWUiDQp9"
+		}
+	}
+}
