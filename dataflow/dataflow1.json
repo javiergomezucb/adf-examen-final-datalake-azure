@@ -17,6 +17,97 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "bja_establecimientos_salud",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "bja_inscripciones",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
+				},
+				{
+					"dataset": {
+						"referenceName": "bja_pagos",
+						"type": "DatasetReference"
+					},
+					"name": "source5"
+				},
+				{
+					"dataset": {
+						"referenceName": "bja_partos",
+						"type": "DatasetReference"
+					},
+					"name": "source6"
+				},
+				{
+					"dataset": {
+						"referenceName": "segip",
+						"type": "DatasetReference"
+					},
+					"name": "source7"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_afiliaciones",
+						"type": "DatasetReference"
+					},
+					"name": "source8"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_asignaciones_mensuales",
+						"type": "DatasetReference"
+					},
+					"name": "source9"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_cajas",
+						"type": "DatasetReference"
+					},
+					"name": "source10"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_certificados_medicos",
+						"type": "DatasetReference"
+					},
+					"name": "source11"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_empleadores",
+						"type": "DatasetReference"
+					},
+					"name": "source12"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_entregas_agencia",
+						"type": "DatasetReference"
+					},
+					"name": "source13"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_entregas_supermercado",
+						"type": "DatasetReference"
+					},
+					"name": "source14"
+				},
+				{
+					"dataset": {
+						"referenceName": "spl_supermercados",
+						"type": "DatasetReference"
+					},
+					"name": "source15"
 				}
 			],
 			"sinks": [
@@ -26,11 +117,151 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_bja_controles_prenatales",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_bja_establecimientos_salud",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_bja_inscripciones",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_bja_pagos",
+						"type": "DatasetReference"
+					},
+					"name": "sink5"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_bja_partos",
+						"type": "DatasetReference"
+					},
+					"name": "sink6"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_segip",
+						"type": "DatasetReference"
+					},
+					"name": "sink7"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_afiliaciones",
+						"type": "DatasetReference"
+					},
+					"name": "sink8"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_asignaciones_mensuales",
+						"type": "DatasetReference"
+					},
+					"name": "sink9"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_cajas",
+						"type": "DatasetReference"
+					},
+					"name": "sink10"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_certificados_medicos",
+						"type": "DatasetReference"
+					},
+					"name": "sink11"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_empleadores",
+						"type": "DatasetReference"
+					},
+					"name": "sink12"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_entregas_agencia",
+						"type": "DatasetReference"
+					},
+					"name": "sink13"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_entregas_supermercado",
+						"type": "DatasetReference"
+					},
+					"name": "sink14"
+				},
+				{
+					"dataset": {
+						"referenceName": "silver_spl_supermercados",
+						"type": "DatasetReference"
+					},
+					"name": "sink15"
 				}
 			],
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "derivedColumn5"
+				},
+				{
+					"name": "derivedColumn6"
+				},
+				{
+					"name": "derivedColumn7"
+				},
+				{
+					"name": "derivedColumn8"
+				},
+				{
+					"name": "derivedColumn9"
+				},
+				{
+					"name": "derivedColumn10"
+				},
+				{
+					"name": "derivedColumn11"
+				},
+				{
+					"name": "derivedColumn12"
+				},
+				{
+					"name": "derivedColumn13"
+				},
+				{
+					"name": "derivedColumn14"
+				},
+				{
+					"name": "derivedColumn15"
 				}
 			],
 			"scriptLines": [
@@ -63,6 +294,166 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
+				"source(output(",
+				"          establecimiento_id as string,",
+				"          codigo_snis as string,",
+				"          nombre as string,",
+				"          tipo as string,",
+				"          nivel_atencion as string,",
+				"          municipio as string,",
+				"          departamento as string,",
+				"          red_salud as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source3",
+				"source(output(",
+				"          inscripcion_id as string,",
+				"          ci_beneficiaria as string,",
+				"          establecimiento_id as string,",
+				"          fecha_inscripcion as string,",
+				"          semana_gestacion as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source4",
+				"source(output(",
+				"          pago_id as string,",
+				"          ci_beneficiaria as string,",
+				"          concepto_pago as string,",
+				"          monto_bs as string,",
+				"          fecha_pago as string,",
+				"          estado_pago as string,",
+				"          canal_pago as string,",
+				"          nro_comprobante as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source5",
+				"source(output(",
+				"          parto_id as string,",
+				"          ci_madre as string,",
+				"          ci_recien_nacido as string,",
+				"          establecimiento_id as string,",
+				"          fecha_parto as string,",
+				"          tipo_parto as string,",
+				"          peso_nacimiento_kg as string,",
+				"          talla_nacimiento_cm as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source6",
+				"source(output(",
+				"          CI as string,",
+				"          Nombres as string,",
+				"          {Ap. Paterno} as string,",
+				"          {Ap. Materno} as string,",
+				"          {Fecha Nac.} as string,",
+				"          {Género} as string,",
+				"          {Estado Civil} as string,",
+				"          Municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source7",
+				"source(output(",
+				"          afiliacion_id as string,",
+				"          ci_beneficiaria as string,",
+				"          empleador_id as string,",
+				"          caja_id as string,",
+				"          fecha_afiliacion as string,",
+				"          nro_matricula as string,",
+				"          tipo_subsidio as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source8",
+				"source(output(",
+				"          asignacion_id as string,",
+				"          afiliacion_id as string,",
+				"          mes as string,",
+				"          gestion as string,",
+				"          monto_bs as string,",
+				"          monto_productos as string,",
+				"          monto_carnes as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source9",
+				"source(output(",
+				"          ID as string,",
+				"          Nombre as string,",
+				"          Sigla as string,",
+				"          Tipo as string,",
+				"          Estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source10",
+				"source(output(",
+				"          certificado_id as string,",
+				"          afiliacion_id as string,",
+				"          fecha_emision as string,",
+				"          semana_gestacion as string,",
+				"          fecha_probable_parto as string,",
+				"          medico_responsable as string,",
+				"          estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source11",
+				"source(output(",
+				"          empleador_id as string,",
+				"          nit as string,",
+				"          razon_social as string,",
+				"          tipo as string,",
+				"          nro_patronal as string,",
+				"          municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source12",
+				"source(output(",
+				"          entrega_ag_id as string,",
+				"          asignacion_id as string,",
+				"          ci_beneficiaria as string,",
+				"          fecha_entrega as string,",
+				"          productos as string,",
+				"          lote as string,",
+				"          peso_kg as string,",
+				"          punto_entrega as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source13",
+				"source(output(",
+				"          entrega_super_id as string,",
+				"          asignacion_id as string,",
+				"          ci_beneficiaria as string,",
+				"          supermercado_id as string,",
+				"          fecha_retiro as string,",
+				"          tipo_carne as string,",
+				"          cantidad_kg as string,",
+				"          monto_bs as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source14",
+				"source(output(",
+				"          ID as string,",
+				"          Cadena as string,",
+				"          Sucursal as string,",
+				"          Municipio as string,",
+				"          {Dirección} as string,",
+				"          Estado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source15",
 				"source1 derive(control_pediatrico_id = toInteger(control_pediatrico_id),",
 				"          ci_nino = trim(ci_nino),",
 				"          ci_madre = trim(ci_madre),",
@@ -73,6 +464,20 @@
 				"          talla_nino_cm = toDecimal(talla_nino_cm,5,1),",
 				"          vacuna_aplicada = trim(vacuna_aplicada),",
 				"          resultado = trim(initCap(resultado))) ~> derivedColumn1",
+				"source2 derive() ~> derivedColumn2",
+				"source3 derive() ~> derivedColumn3",
+				"source4 derive() ~> derivedColumn4",
+				"source5 derive() ~> derivedColumn5",
+				"source6 derive() ~> derivedColumn6",
+				"source7 derive() ~> derivedColumn7",
+				"source8 derive() ~> derivedColumn8",
+				"source9 derive() ~> derivedColumn9",
+				"source10 derive() ~> derivedColumn10",
+				"source11 derive() ~> derivedColumn11",
+				"source12 derive() ~> derivedColumn12",
+				"source13 derive() ~> derivedColumn13",
+				"source14 derive() ~> derivedColumn14",
+				"source15 derive() ~> derivedColumn15",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -94,7 +499,278 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          control_prenatal_id as integer,",
+				"          ci_beneficiaria as string,",
+				"          establecimiento_id as integer,",
+				"          nro_control as integer,",
+				"          fecha_control as date,",
+				"          semana_gestacion as integer,",
+				"          peso_madre_kg as decimal(5,2),",
+				"          presion_arterial as string,",
+				"          resultado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          establecimiento_id as integer,",
+				"          codigo_snis as string,",
+				"          nombre as string,",
+				"          tipo as string,",
+				"          nivel_atencion as string,",
+				"          municipio as string,",
+				"          departamento as string,",
+				"          red_salud as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+				"derivedColumn4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          inscripcion_id as integer,",
+				"          ci_beneficiaria as string,",
+				"          establecimiento_id as integer,",
+				"          fecha_inscripcion as date,",
+				"          semana_gestacion as integer,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink4",
+				"derivedColumn5 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          pago_id as integer,",
+				"          ci_beneficiaria as string,",
+				"          concepto_pago as string,",
+				"          monto_bs as decimal(10,2),",
+				"          fecha_pago as date,",
+				"          estado_pago as string,",
+				"          canal_pago as string,",
+				"          nro_comprobante as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink5",
+				"derivedColumn6 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          parto_id as integer,",
+				"          ci_madre as string,",
+				"          ci_recien_nacido as string,",
+				"          establecimiento_id as integer,",
+				"          fecha_parto as date,",
+				"          tipo_parto as string,",
+				"          peso_nacimiento_kg as decimal(5,2),",
+				"          talla_nacimiento_cm as decimal(5,1)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink6",
+				"derivedColumn7 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          CI as string,",
+				"          Nombres as string,",
+				"          Ap_Paterno as string,",
+				"          Ap_Materno as string,",
+				"          Fecha_Nac as date,",
+				"          Genero as string,",
+				"          Estado_Civil as string,",
+				"          Municipio as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink7",
+				"derivedColumn8 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          afiliacion_id as integer,",
+				"          ci_beneficiaria as string,",
+				"          empleador_id as integer,",
+				"          caja_id as integer,",
+				"          fecha_afiliacion as date,",
+				"          nro_matricula as string,",
+				"          tipo_subsidio as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink8",
+				"derivedColumn9 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          certificado_id as integer,",
+				"          afiliacion_id as integer,",
+				"          fecha_emision as date,",
+				"          semana_gestacion as integer,",
+				"          fecha_probable_parto as date,",
+				"          medico_responsable as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink9",
+				"derivedColumn10 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          caja_id as integer,",
+				"          nombre as string,",
+				"          sigla as string,",
+				"          tipo as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink10",
+				"derivedColumn11 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          certificado_id as integer,",
+				"          afiliacion_id as integer,",
+				"          fecha_emision as date,",
+				"          semana_gestacion as integer,",
+				"          fecha_probable_parto as date,",
+				"          medico_responsable as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink11",
+				"derivedColumn12 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          empleador_id as integer,",
+				"          nit as string,",
+				"          razon_social as string,",
+				"          tipo as string,",
+				"          nro_patronal as string,",
+				"          municipio as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink12",
+				"derivedColumn13 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          entrega_ag_id as integer,",
+				"          asignacion_id as integer,",
+				"          ci_beneficiaria as string,",
+				"          fecha_entrega as date,",
+				"          productos as string,",
+				"          lote as string,",
+				"          peso_kg as decimal(6,2),",
+				"          punto_entrega as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink13",
+				"derivedColumn14 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          entrega_super_id as integer,",
+				"          asignacion_id as integer,",
+				"          ci_beneficiaria as string,",
+				"          supermercado_id as integer,",
+				"          fecha_retiro as date,",
+				"          tipo_carne as string,",
+				"          cantidad_kg as decimal(6,2),",
+				"          monto_bs as decimal(10,2)",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink14",
+				"derivedColumn15 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          supermercado_id as integer,",
+				"          cadena as string,",
+				"          sucursal as string,",
+				"          municipio as string,",
+				"          direccion as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink15"
 			]
 		}
 	}
