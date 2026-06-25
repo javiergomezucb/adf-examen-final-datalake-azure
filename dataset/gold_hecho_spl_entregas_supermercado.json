@@ -1,0 +1,56 @@
+{
+	"name": "gold_hecho_spl_entregas_supermercado",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "db_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "entrega_super_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fecha_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "beneficiaria_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "supermercado_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "cantidad_kg",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 2
+			},
+			{
+				"name": "monto_bs",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "tipo_carne",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "hecho_spl_entregas_supermercado"
+		}
+	}
+}

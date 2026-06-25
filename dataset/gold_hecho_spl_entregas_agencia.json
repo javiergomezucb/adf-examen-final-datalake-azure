@@ -1,0 +1,53 @@
+{
+	"name": "gold_hecho_spl_entregas_agencia",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "db_subsidio",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "gold"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "entrega_ag_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "fecha_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "beneficiaria_key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "peso_kg",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 2
+			},
+			{
+				"name": "productos",
+				"type": "varchar"
+			},
+			{
+				"name": "lote",
+				"type": "varchar"
+			},
+			{
+				"name": "punto_entrega",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "gold",
+			"table": "hecho_spl_entregas_agencia"
+		}
+	}
+}
