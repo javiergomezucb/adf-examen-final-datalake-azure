@@ -30,13 +30,13 @@
 				"          caja_id as integer,",
 				"          nombre as string,",
 				"          sigla as string,",
-				"          tipo as string,",
-				"          estado as string",
+				"          tipo as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     query: 'SELECT DISTINCT\\n    caja_id,\\n    nombre,\\n    sigla,\\n    tipo\\nFROM silver.spl_cajas\\nWHERE caja_id IS NOT NULL',",
+				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -53,7 +53,13 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          caja_id,",
+				"          nombre,",
+				"          sigla,",
+				"          tipo",
+				"     )) ~> sink1"
 			]
 		}
 	}

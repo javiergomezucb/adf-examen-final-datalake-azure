@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "silver_spl_supermercados",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -22,8 +26,17 @@
 			],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"source(output(",
+				"          supermercado_id as integer,",
+				"          cadena as string,",
+				"          sucursal as string,",
+				"          municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT\\n    supermercado_id,\\n    cadena,\\n    sucursal,\\n    municipio\\nFROM silver.spl_supermercados\\nWHERE supermercado_id IS NOT NULL',",
+				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -40,7 +53,13 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          supermercado_id,",
+				"          cadena,",
+				"          sucursal,",
+				"          municipio",
+				"     )) ~> sink1"
 			]
 		}
 	}
