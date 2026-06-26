@@ -13,6 +13,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "gold_hecho_bja_controles_pediatricos",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -22,8 +26,25 @@
 				"     validateSchema: false) ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          control_ped_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          establecimiento_key as integer,",
+				"          nro_control as integer,",
+				"          peso_nino_kg as decimal(5,2),",
+				"          talla_nino_cm as decimal(5,1),",
+				"          vacuna_aplicada as string,",
+				"          resultado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}

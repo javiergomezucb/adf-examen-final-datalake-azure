@@ -13,6 +13,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "gold_hecho_spl_entregas_supermercado",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				}
 			],
@@ -22,8 +26,23 @@
 				"     validateSchema: false) ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     input(",
+				"          entrega_super_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          supermercado_key as integer,",
+				"          cantidad_kg as decimal(6,2),",
+				"          monto_bs as decimal(10,2),",
+				"          tipo_carne as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}

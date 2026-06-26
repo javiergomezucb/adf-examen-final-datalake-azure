@@ -34,13 +34,13 @@
 				"          nivel_atencion as string,",
 				"          municipio as string,",
 				"          departamento as string,",
-				"          red_salud as string,",
-				"          estado as string",
+				"          red_salud as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     query: 'SELECT DISTINCT\\n    establecimiento_id,\\n    codigo_snis,\\n    nombre,\\n    tipo,\\n    nivel_atencion,\\n    municipio,\\n    departamento,\\n    red_salud\\nFROM silver.bja_establecimientos_salud\\nWHERE establecimiento_id IS NOT NULL',",
+				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -61,7 +61,17 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          establecimiento_id,",
+				"          codigo_snis,",
+				"          nombre,",
+				"          tipo,",
+				"          nivel_atencion,",
+				"          municipio,",
+				"          departamento,",
+				"          red_salud",
+				"     )) ~> sink1"
 			]
 		}
 	}

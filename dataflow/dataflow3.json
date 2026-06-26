@@ -31,13 +31,13 @@
 				"          nit as string,",
 				"          razon_social as string,",
 				"          tipo as string,",
-				"          nro_patronal as string,",
 				"          municipio as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     query: 'SELECT DISTINCT\\n    empleador_id,\\n    nit,\\n    razon_social,\\n    tipo,\\n    municipio\\nFROM silver.spl_empleadores\\nWHERE empleador_id IS NOT NULL',",
+				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -55,7 +55,14 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          empleador_id,",
+				"          nit,",
+				"          razon_social,",
+				"          tipo,",
+				"          municipio",
+				"     )) ~> sink1"
 			]
 		}
 	}
