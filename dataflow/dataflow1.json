@@ -1,0 +1,78 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"folder": {
+			"name": "gold"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "silver_segip",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_dim_beneficiaria",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          CI as string,",
+				"          nombres as string,",
+				"          ap_paterno as string,",
+				"          ap_materno as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          estado_civil as string,",
+				"          municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT DISTINCT\\n    CI,\\n    Nombres          AS nombres,\\n    Ap_Paterno       AS ap_paterno,\\n    Ap_Materno       AS ap_materno,\\n    Fecha_Nac        AS fecha_nacimiento,\\n    Genero           AS genero,\\n    Estado_Civil     AS estado_civil,\\n    Municipio        AS municipio\\nFROM silver.segip\\nWHERE CI IS NOT NULL',",
+				"     format: 'query') ~> source1",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          beneficiaria_key as integer,",
+				"          CI as string,",
+				"          nombres as string,",
+				"          ap_paterno as string,",
+				"          ap_materno as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          estado_civil as string,",
+				"          municipio as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          CI,",
+				"          nombres,",
+				"          ap_paterno,",
+				"          ap_materno,",
+				"          fecha_nacimiento,",
+				"          genero,",
+				"          estado_civil,",
+				"          municipio",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
