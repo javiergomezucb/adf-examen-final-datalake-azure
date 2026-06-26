@@ -1,0 +1,51 @@
+{
+	"name": "Tabla_de_hechos",
+	"properties": {
+		"folder": {
+			"name": "gold"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "silver_segip",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"name": "source2"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "lookup1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CI as string,",
+				"          Nombres as string,",
+				"          Ap_Paterno as string,",
+				"          Ap_Materno as string,",
+				"          Fecha_Nac as date,",
+				"          Genero as string,",
+				"          Estado_Civil as string,",
+				"          Municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source2",
+				"source1, source2 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1"
+			]
+		}
+	}
+}
