@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "gold_dim_beneficiaria",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				},
 				{
@@ -33,13 +37,21 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "gold_dim_supermercado",
+						"referenceName": "gold_dim_tiempo",
 						"type": "DatasetReference"
 					},
 					"name": "source5"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "gold_hecho_subsidios_maestro",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "lookup1"
@@ -55,8 +67,21 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"source(output(",
+				"          beneficiaria_key as integer,",
+				"          CI as string,",
+				"          nombres as string,",
+				"          ap_paterno as string,",
+				"          ap_materno as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          estado_civil as string,",
+				"          municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"source(output(",
 				"          caja_key as integer,",
 				"          caja_id as integer,",
@@ -96,11 +121,14 @@
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source4",
 				"source(output(",
-				"          supermercado_key as integer,",
-				"          supermercado_id as integer,",
-				"          cadena as string,",
-				"          sucursal as string,",
-				"          municipio as string",
+				"          fecha_key as integer,",
+				"          fecha as date,",
+				"          dia_mes as integer,",
+				"          mes as integer,",
+				"          nombre_mes as string,",
+				"          trimestre as integer,",
+				"          anio as integer,",
+				"          es_fin_semana as boolean",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -110,18 +138,56 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
-				"lookup1, source3 lookup(caja_key == empleador_key,",
+				"lookup1, source3 lookup(beneficiaria_key == empleador_key,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup2",
-				"lookup2, source4 lookup(beneficiaria_key == establecimiento_key,",
+				"lookup2, source4 lookup(caja_key == establecimiento_key,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup3",
-				"lookup3, source5 lookup(beneficiaria_key == supermercado_key,",
+				"lookup3, source5 lookup(caja_key == mes,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup4"
+				"     broadcast: 'auto')~> lookup4",
+				"lookup4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          hecho_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          establecimiento_key as integer,",
+				"          empleador_key as integer,",
+				"          caja_key as integer,",
+				"          supermercado_key as integer,",
+				"          tipo_evento as string,",
+				"          monto_bs as decimal(10,2),",
+				"          concepto_pago as string,",
+				"          nro_control as integer,",
+				"          semana_gestacion as integer,",
+				"          peso_madre_kg as decimal(5,2),",
+				"          peso_nino_kg as decimal(5,2),",
+				"          talla_nino_cm as decimal(5,1),",
+				"          vacuna_aplicada as string,",
+				"          monto_productos as decimal(10,2),",
+				"          monto_carnes as decimal(10,2),",
+				"          tipo_subsidio as string,",
+				"          peso_entrega_kg as decimal(6,2),",
+				"          lote as string,",
+				"          punto_entrega as string,",
+				"          tipo_carne as string,",
+				"          cantidad_kg as decimal(6,2),",
+				"          resultado as string,",
+				"          estado as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}

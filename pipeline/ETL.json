@@ -5,7 +5,14 @@
 			{
 				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Script1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -356,7 +363,7 @@
 					"scripts": [
 						{
 							"type": "NonQuery",
-							"text": "delete from gold.dim_canal;\ndelete from gold.dim_cliente;\ndelete from gold.dim_producto;\ndelete from gold.dim_tiempo;\nDELETE from gold.hechos_ventas;\nDELETE from gold.hechos_ventas;\nDELETE from gold.hechos_ventas;"
+							"text": "DELETE FROM gold.hecho_subsidios_maestro;\nDELETE FROM gold.hecho_spl_entregas_supermercado;\nDELETE FROM gold.hecho_spl_entregas_agencia;\nDELETE FROM gold.hecho_spl_asignaciones;\nDELETE FROM gold.hecho_bja_controles_pediatricos;\nDELETE FROM gold.hecho_bja_controles_prenatales;\nDELETE FROM gold.hecho_bja_pagos;\nDELETE FROM gold.dim_supermercado;\nDELETE FROM gold.dim_caja_salud;\nDELETE FROM gold.dim_empleador;\nDELETE FROM gold.dim_establecimiento;\nDELETE FROM gold.dim_beneficiaria;\nDELETE FROM gold.dim_tiempo;"
 						}
 					],
 					"scriptBlockExecutionTimeout": "02:00:00"
