@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "silver_spl_entregas_agencia",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -22,8 +26,19 @@
 			],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"source(output(",
+				"          fecha_key as integer,",
+				"          ci_beneficiaria as string,",
+				"          peso_kg as decimal(6,2),",
+				"          productos as string,",
+				"          lote as string,",
+				"          punto_entrega as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT\\n    CAST(CONVERT(VARCHAR(8), ea.fecha_entrega, 112) AS INT)  AS fecha_key,\\n    ea.ci_beneficiaria,\\n    ea.peso_kg,\\n    ea.productos,\\n    ea.lote,\\n    ea.punto_entrega\\nFROM silver.spl_entregas_agencia ea\\nWHERE ea.fecha_entrega IS NOT NULL',",
+				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -42,7 +57,14 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          fecha_key,",
+				"          peso_kg,",
+				"          productos,",
+				"          lote,",
+				"          punto_entrega",
+				"     )) ~> sink1"
 			]
 		}
 	}

@@ -8,6 +8,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "silver_spl_entregas_supermercado",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -22,8 +26,19 @@
 			],
 			"transformations": [],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"source(output(",
+				"          fecha_key as integer,",
+				"          ci_beneficiaria as string,",
+				"          supermercado_id as integer,",
+				"          cantidad_kg as decimal(6,2),",
+				"          monto_bs as decimal(10,2),",
+				"          tipo_carne as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     query: 'SELECT\\n    CAST(CONVERT(VARCHAR(8), es.fecha_retiro, 112) AS INT)   AS fecha_key,\\n    es.ci_beneficiaria,\\n    es.supermercado_id,\\n    es.cantidad_kg,\\n    es.monto_bs,\\n    es.tipo_carne\\nFROM silver.spl_entregas_supermercado es\\nWHERE es.fecha_retiro IS NOT NULL',",
+				"     format: 'query') ~> source1",
 				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -42,7 +57,13 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          fecha_key,",
+				"          cantidad_kg,",
+				"          monto_bs,",
+				"          tipo_carne",
+				"     )) ~> sink1"
 			]
 		}
 	}
