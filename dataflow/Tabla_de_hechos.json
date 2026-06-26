@@ -9,42 +9,136 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "silver_segip",
+						"referenceName": "gold_dim_beneficiaria",
 						"type": "DatasetReference"
 					},
 					"name": "source1"
 				},
 				{
+					"dataset": {
+						"referenceName": "gold_dim_caja_salud",
+						"type": "DatasetReference"
+					},
 					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_dim_empleador",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_dim_establecimiento",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_dim_supermercado",
+						"type": "DatasetReference"
+					},
+					"name": "source5"
 				}
 			],
 			"sinks": [],
 			"transformations": [
 				{
 					"name": "lookup1"
+				},
+				{
+					"name": "lookup2"
+				},
+				{
+					"name": "lookup3"
+				},
+				{
+					"name": "lookup4"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
+				"          beneficiaria_key as integer,",
 				"          CI as string,",
-				"          Nombres as string,",
-				"          Ap_Paterno as string,",
-				"          Ap_Materno as string,",
-				"          Fecha_Nac as date,",
-				"          Genero as string,",
-				"          Estado_Civil as string,",
-				"          Municipio as string",
+				"          nombres as string,",
+				"          ap_paterno as string,",
+				"          ap_materno as string,",
+				"          fecha_nacimiento as date,",
+				"          genero as string,",
+				"          estado_civil as string,",
+				"          municipio as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source2",
-				"source1, source2 lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"source(output(",
+				"          caja_key as integer,",
+				"          caja_id as integer,",
+				"          nombre as string,",
+				"          sigla as string,",
+				"          tipo as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source(output(",
+				"          empleador_key as integer,",
+				"          empleador_id as integer,",
+				"          nit as string,",
+				"          razon_social as string,",
+				"          tipo as string,",
+				"          municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source3",
+				"source(output(",
+				"          establecimiento_key as integer,",
+				"          establecimiento_id as integer,",
+				"          codigo_snis as string,",
+				"          nombre as string,",
+				"          tipo as string,",
+				"          nivel_atencion as string,",
+				"          municipio as string,",
+				"          departamento as string,",
+				"          red_salud as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source4",
+				"source(output(",
+				"          supermercado_key as integer,",
+				"          supermercado_id as integer,",
+				"          cadena as string,",
+				"          sucursal as string,",
+				"          municipio as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source5",
+				"source1, source2 lookup(beneficiaria_key == caja_key,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1"
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1, source3 lookup(caja_key == empleador_key,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup2",
+				"lookup2, source4 lookup(beneficiaria_key == establecimiento_key,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup3",
+				"lookup3, source5 lookup(beneficiaria_key == supermercado_key,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup4"
 			]
 		}
 	}

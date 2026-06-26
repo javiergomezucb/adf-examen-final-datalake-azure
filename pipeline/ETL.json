@@ -1,5 +1,5 @@
 {
-	"name": "gold",
+	"name": "ETL",
 	"properties": {
 		"activities": [
 			{
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "gold_dim_beneficiaria",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -47,7 +47,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow2",
+						"referenceName": "gold_dim_establecimiento",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -78,7 +78,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow3",
+						"referenceName": "gold_dim_empleador",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -109,7 +109,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow4",
+						"referenceName": "gold_dim_caja_salud",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -140,7 +140,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow5",
+						"referenceName": "gold_dim_supermercado",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -334,6 +334,32 @@
 						"computeType": "General"
 					},
 					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Script1",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "db_subsidio",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "NonQuery",
+							"text": "delete from gold.dim_canal;\ndelete from gold.dim_cliente;\ndelete from gold.dim_producto;\ndelete from gold.dim_tiempo;\nDELETE from gold.hechos_ventas;\nDELETE from gold.hechos_ventas;"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
 				}
 			}
 		],
