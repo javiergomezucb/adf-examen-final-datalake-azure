@@ -8,10 +8,6 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "gold_dim_beneficiaria",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				},
 				{
@@ -59,21 +55,8 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          beneficiaria_key as integer,",
-				"          CI as string,",
-				"          nombres as string,",
-				"          ap_paterno as string,",
-				"          ap_materno as string,",
-				"          fecha_nacimiento as date,",
-				"          genero as string,",
-				"          estado_civil as string,",
-				"          municipio as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1",
 				"source(output(",
 				"          caja_key as integer,",
 				"          caja_id as integer,",
