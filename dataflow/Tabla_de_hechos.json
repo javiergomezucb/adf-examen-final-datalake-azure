@@ -9,38 +9,45 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "gold_dim_beneficiaria",
-						"type": "DatasetReference"
-					},
-					"name": "source1"
-				},
-				{
-					"dataset": {
-						"referenceName": "gold_dim_caja_salud",
+						"referenceName": "gold_hecho_bja_controles_prenatales",
 						"type": "DatasetReference"
 					},
 					"name": "source2"
 				},
 				{
 					"dataset": {
-						"referenceName": "gold_dim_empleador",
+						"referenceName": "gold_hecho_bja_pagos",
 						"type": "DatasetReference"
 					},
 					"name": "source3"
 				},
 				{
 					"dataset": {
-						"referenceName": "gold_dim_establecimiento",
+						"referenceName": "gold_hecho_spl_asignaciones",
 						"type": "DatasetReference"
 					},
 					"name": "source4"
 				},
 				{
 					"dataset": {
-						"referenceName": "gold_dim_tiempo",
+						"referenceName": "gold_hecho_spl_entregas_agencia",
 						"type": "DatasetReference"
 					},
 					"name": "source5"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_hecho_bja_controles_pediatricos",
+						"type": "DatasetReference"
+					},
+					"name": "source7"
+				},
+				{
+					"dataset": {
+						"referenceName": "gold_hecho_spl_entregas_supermercado",
+						"type": "DatasetReference"
+					},
+					"name": "source8"
 				}
 			],
 			"sinks": [
@@ -54,103 +61,106 @@
 			],
 			"transformations": [
 				{
-					"name": "lookup1"
+					"name": "union1"
 				},
 				{
-					"name": "lookup2"
+					"name": "derivedColumn1"
 				},
 				{
-					"name": "lookup3"
-				},
-				{
-					"name": "lookup4"
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
 				"source(output(",
+				"          control_pre_key as integer,",
+				"          fecha_key as integer,",
 				"          beneficiaria_key as integer,",
-				"          CI as string,",
-				"          nombres as string,",
-				"          ap_paterno as string,",
-				"          ap_materno as string,",
-				"          fecha_nacimiento as date,",
-				"          genero as string,",
-				"          estado_civil as string,",
-				"          municipio as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
-				"source(output(",
-				"          caja_key as integer,",
-				"          caja_id as integer,",
-				"          nombre as string,",
-				"          sigla as string,",
-				"          tipo as string",
+				"          establecimiento_key as integer,",
+				"          nro_control as integer,",
+				"          semana_gestacion as integer,",
+				"          peso_madre_kg as decimal(5,2),",
+				"          resultado as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source2",
 				"source(output(",
-				"          empleador_key as integer,",
-				"          empleador_id as integer,",
-				"          nit as string,",
-				"          razon_social as string,",
-				"          tipo as string,",
-				"          municipio as string",
+				"          pago_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          monto_bs as decimal(10,2),",
+				"          concepto_pago as string,",
+				"          estado_pago as string,",
+				"          canal_pago as string,",
+				"          nro_comprobante as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source3",
 				"source(output(",
-				"          establecimiento_key as integer,",
-				"          establecimiento_id as integer,",
-				"          codigo_snis as string,",
-				"          nombre as string,",
-				"          tipo as string,",
-				"          nivel_atencion as string,",
-				"          municipio as string,",
-				"          departamento as string,",
-				"          red_salud as string",
+				"          asignacion_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          empleador_key as integer,",
+				"          caja_key as integer,",
+				"          monto_bs as decimal(10,2),",
+				"          monto_productos as decimal(10,2),",
+				"          monto_carnes as decimal(10,2),",
+				"          tipo_subsidio as string,",
+				"          estado as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source4",
 				"source(output(",
+				"          entrega_ag_key as integer,",
 				"          fecha_key as integer,",
-				"          fecha as date,",
-				"          dia_mes as integer,",
-				"          mes as integer,",
-				"          nombre_mes as string,",
-				"          trimestre as integer,",
-				"          anio as integer,",
-				"          es_fin_semana as boolean",
+				"          beneficiaria_key as integer,",
+				"          peso_kg as decimal(6,2),",
+				"          productos as string,",
+				"          lote as string,",
+				"          punto_entrega as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source5",
-				"source1, source2 lookup(beneficiaria_key == caja_key,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
-				"lookup1, source3 lookup(beneficiaria_key == empleador_key,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup2",
-				"lookup2, source4 lookup(caja_key == establecimiento_key,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup3",
-				"lookup3, source5 lookup(caja_key == mes,",
-				"     multiple: false,",
-				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup4",
-				"lookup4 sink(allowSchemaDrift: true,",
+				"source(output(",
+				"          control_ped_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          establecimiento_key as integer,",
+				"          nro_control as integer,",
+				"          peso_nino_kg as decimal(5,2),",
+				"          talla_nino_cm as decimal(5,1),",
+				"          vacuna_aplicada as string,",
+				"          resultado as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source7",
+				"source(output(",
+				"          entrega_super_key as integer,",
+				"          fecha_key as integer,",
+				"          beneficiaria_key as integer,",
+				"          supermercado_key as integer,",
+				"          cantidad_kg as decimal(6,2),",
+				"          monto_bs as decimal(10,2),",
+				"          tipo_carne as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source8",
+				"source7, source2, source3, source4, source5, source8 union(byName: true)~> union1",
+				"union1 derive(tipo_evento = case(     !isNull(vacuna_aplicada), 'Control Pediatrico',     !isNull(semana_gestacion), 'Control Prenatal',     !isNull(concepto_pago), 'Pago BJA',     !isNull(tipo_subsidio), 'Asignacion SPL',     !isNull(punto_entrega), 'Entrega Agencia',     !isNull(supermercado_key), 'Entrega Supermercado',     'Desconocido' ),",
+				"          fecha_key = iifNull(fecha_key, 19000101)) ~> derivedColumn1",
+				"derivedColumn1 filter(!isNull(beneficiaria_key)) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          hecho_key as integer,",
@@ -187,7 +197,33 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          fecha_key,",
+				"          beneficiaria_key,",
+				"          establecimiento_key,",
+				"          empleador_key,",
+				"          caja_key,",
+				"          supermercado_key,",
+				"          tipo_evento,",
+				"          monto_bs,",
+				"          concepto_pago,",
+				"          nro_control,",
+				"          semana_gestacion,",
+				"          peso_madre_kg,",
+				"          peso_nino_kg,",
+				"          talla_nino_cm,",
+				"          vacuna_aplicada,",
+				"          monto_productos,",
+				"          monto_carnes,",
+				"          tipo_subsidio,",
+				"          lote,",
+				"          punto_entrega,",
+				"          tipo_carne,",
+				"          cantidad_kg,",
+				"          resultado,",
+				"          estado",
+				"     )) ~> sink1"
 			]
 		}
 	}
